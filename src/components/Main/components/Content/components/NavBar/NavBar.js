@@ -1,6 +1,6 @@
 import 'date-fns';
 import { Box, Grid, makeStyles } from '@material-ui/core';
-import React from 'react';
+import React, { useEffect } from 'react';
 import ArrowIcon from './Arrow.svg'
 import DateFnsUtils from '@date-io/date-fns';
 import { KeyboardDatePicker, MuiPickersUtilsProvider } from '@material-ui/pickers';
@@ -67,9 +67,18 @@ const useStyles = makeStyles(theme => ({
 const NavBar = (props) => {
     const classes = useStyles()
     const [selectedDate, setSelectedDate] = React.useState(new Date());
+
+    useEffect(() => {
+        // let date = `${selectedDate.getFullYear()}-${selectedDate.getMonth() + 1}-${selectedDate.getDate()}`
+        let date = selectedDate.toISOString().slice(0,10)
+        props.setOutboundPartialDate(date)
+        // eslint-disable-next-line react-hooks/exhaustive-deps
+    }, [selectedDate])
+
     const handleDateChange = (date) => {
         setSelectedDate(date);
     };
+
     function DateIcon() {
         return <img src={Calendar} alt='date-icon' />
     }

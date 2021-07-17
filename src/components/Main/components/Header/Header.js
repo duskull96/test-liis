@@ -31,7 +31,7 @@ const Header = (props) => {
         <>
             <Grid container direction='row' justifyContent='center' alignItems='center'>
                 <Grid item xs={12} md={8} className={classes.header}>
-                    <button className={classes.button}>
+                    <button onClick={ () => props.logOut()} className={classes.button}>
                         Выйти
                         <img src={LogOut} alt='logout' />
                     </button>

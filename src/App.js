@@ -1,15 +1,25 @@
-import React from "react";
-import Auth from "./components/Auth/Auth";
-import Main from "./components/Main/Main";
+import React, { useEffect } from "react";
+import Cookies from "js-cookie";
+import AuthContainer from "./components/Auth/AuthContainer";
+import MainContainer from "./components/Main/MainContainer";
 
-function App() {
+const App = props => {
+
+    useEffect(() => {
+        const token = Cookies.get('Token')
+        if (token !== '' && token !== undefined) {
+            props.setSuccess()
+        }
+        // eslint-disable-next-line react-hooks/exhaustive-deps
+    }, [props.status])
+
     return (
         <>
             {
-                true ?
-                    <Main />
+                props.status === "SIGNIN_SUCCESS" ?
+                    <MainContainer />
                     :
-                    <Auth />
+                    <AuthContainer />
             }
         </>
     );

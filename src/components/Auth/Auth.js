@@ -93,7 +93,7 @@ const useStyles = makeStyles((theme) => ({
 
 
 const Auth = (props) => {
-    // console.log(props, 'Auth - props');
+    console.log(props, 'Auth - props');
     const classes = useStyles();
     const [alert, setAlert] = useState(false)
 
@@ -115,15 +115,16 @@ const Auth = (props) => {
         validationSchema: yup.object({
             username: yup.string()
                 .max(150, 'Max 150 characters')
-                .matches(/^[\w.@+-]+$/, 'Invalid characters')
+                // .matches(/^[\w.@+-]+$/, 'Invalid characters')
                 .required('Required'),
             password: yup.string()
                 .min(8, 'Min 8 characters')
                 .max(128, 'Max 128 characters')
-                .matches(/^(?=.*[A-Z])(?=.*\d).{8,}$/, 'Password should be 8+ characters, 1 capital, 1 numeric')
+                // .matches(/^(?=.*[A-Z])(?=.*\d).{8,}$/, 'Password should be 8+ characters, 1 capital, 1 numeric')
                 .required('Required')
         }),
         onSubmit: ({ username, password }) => {
+            console.log(values);
             props.SignIn(values)
             props.setPending()
         }
