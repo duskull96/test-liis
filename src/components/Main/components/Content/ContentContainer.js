@@ -1,11 +1,15 @@
 import { connect } from 'react-redux'
-import { fetchFlightsCreator, setOutboundPartialDateCreator } from '../../../../redux/reducers/MainPageReducer'
+import { fetchFlightsCreator, setFavoritFlightsCreator, setOutboundPartialDateCreator, setPendingFlightsCreator } from '../../../../redux/reducers/FlightsPageReducer'
+import { setImagesCreator } from '../../../../redux/reducers/SliderPageReducer'
 import Content from './Content'
 
 
 const mapStateToProps = state => {
     return {
-        state: state.MainPageReducer
+        state: {
+            flightsPage: state.FlightsPageReducer,
+            sliderPage: state.SliderPageReducer
+        }
     }
 }
 const mapDispatchToProps = dispatch => {
@@ -15,6 +19,15 @@ const mapDispatchToProps = dispatch => {
         },
         setOutboundPartialDate: (outboundPartialDate) => {
             dispatch(setOutboundPartialDateCreator(outboundPartialDate))
+        },
+        setImages: (images) => {
+            dispatch(setImagesCreator(images))
+        },
+        setFavorit: (id, boolean) => {
+            dispatch(setFavoritFlightsCreator(id, boolean))
+        },
+        setPendingFlights: () => {
+            dispatch(setPendingFlightsCreator())
         }
     }
 }

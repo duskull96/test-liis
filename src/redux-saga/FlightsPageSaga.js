@@ -1,5 +1,5 @@
 import { call, put, takeEvery } from "redux-saga/effects";
-import { FETCH_FLIGHTS, requestFlightsFailedCreator, setFlightsCreator } from "../redux/reducers/MainPageReducer";
+import { FETCH_FLIGHTS, requestFlightsFailedCreator, setFlightsCreator } from "../redux/reducers/FlightsPageReducer";
 import { Api } from "./FetchData/Fetch";
 
 function fetchBrowseQuotes(payload) {

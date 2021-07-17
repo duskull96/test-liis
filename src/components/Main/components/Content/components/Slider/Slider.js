@@ -1,5 +1,5 @@
 import { makeStyles } from '@material-ui/core';
-import React from 'react';
+import React, { useEffect } from 'react';
 import { Swiper, SwiperSlide } from "swiper/react";
 import "swiper/swiper.min.css";
 import "swiper/components/pagination/pagination.min.css";
@@ -29,23 +29,32 @@ const useStyles = makeStyles({
 })
 
 const Slider = (props) => {
+    console.log(props, 'Slider - props');
     const classes = useStyles()
+    useEffect(() => {
+        if (props.images.images) {
+            props.setImages([SlideImg1, SlideImg2, SlideImg3, SlideImg4, SlideImg1, SlideImg2, SlideImg3, SlideImg4])
+        }
+        // eslint-disable-next-line react-hooks/exhaustive-deps
+    }, [props.images.status])
     return (
-            <Swiper
-                slidesPerView={3.5}
-                spaceBetween={10}
-                freeMode={true}
-                className={classes.container}
-            >
-                <SwiperSlide className={classes.slide}><img src={SlideImg1} alt='slide1' /></SwiperSlide>
-                <SwiperSlide className={classes.slide}><img src={SlideImg2} alt='slide2' /></SwiperSlide>
-                <SwiperSlide className={classes.slide}><img src={SlideImg3} alt='slide3' /></SwiperSlide>
-                <SwiperSlide className={classes.slide}><img src={SlideImg4} alt='slide4' /></SwiperSlide>
-                <SwiperSlide className={classes.slide}><img src={SlideImg1} alt='slide1' /></SwiperSlide>
-                <SwiperSlide className={classes.slide}><img src={SlideImg2} alt='slide2' /></SwiperSlide>
-                <SwiperSlide className={classes.slide}><img src={SlideImg3} alt='slide3' /></SwiperSlide>
-                <SwiperSlide className={classes.slide}><img src={SlideImg4} alt='slide4' /></SwiperSlide>
-            </Swiper>
+        <Swiper
+            slidesPerView={3.5}
+            spaceBetween={10}
+            freeMode={true}
+            className={classes.container}
+        >
+            {
+                props.images.images.map((img, id) => {
+                    return (
+                        <SwiperSlide className={classes.slide} key={Math.floor(Math.random() * 1e10)}>
+                            <img src={img} alt={`img-${id + 1}`} />
+                        </SwiperSlide>
+                    )
+                })
+            }
+
+        </Swiper>
     )
 }
 

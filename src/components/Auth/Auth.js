@@ -63,9 +63,43 @@ const useStyles = makeStyles((theme) => ({
         border: '1px solid #C9CACC',
         boxSizing: 'border-box',
         borderRadius: 4,
-        margin: '7px 0px 25px 0px',
+        marginTop: 7,
+        marginBottom: 25,
         padding: theme.spacing(1),
         outline: 'none'
+    },
+    inputLabel: {
+        fontWeight: '300',
+        fontSize: 16,
+        lineHeight: '19px',
+        color: '#424242',
+    },
+    inputError: {
+        height: 35,
+        border: '1px solid #EB1717',
+        boxSizing: 'border-box',
+        borderRadius: 4,
+        marginTop: 7,
+        padding: theme.spacing(1),
+        outline: 'none',
+        boxShadow: '0px 0px 4px rgba(235, 23, 23, 0.2)'
+    },
+    inputErrorLabel: {
+        color: '#EB1717',
+        fontSize: 16,
+        lineHeight: '19px',
+        fontWeight: '300',
+    },
+    inputErrorMessage: {
+        color: '#EB1717',
+        fontSize: 12,
+        fontWeight: 300,
+        lineHeight: '14px',
+        marginTop: 3,
+        marginBottom: 11,
+        
+        
+
     },
     button: {
         width: 116,
@@ -115,12 +149,12 @@ const Auth = (props) => {
         validationSchema: yup.object({
             username: yup.string()
                 .max(150, 'Max 150 characters')
-                // .matches(/^[\w.@+-]+$/, 'Invalid characters')
+                .matches(/^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/, 'Invalid email')
                 .required('Required'),
             password: yup.string()
                 .min(8, 'Min 8 characters')
                 .max(128, 'Max 128 characters')
-                // .matches(/^(?=.*[A-Z])(?=.*\d).{8,}$/, 'Password should be 8+ characters, 1 capital, 1 numeric')
+                .matches(/^[a-zA-Z0-9]{8,}$/, 'Password should be 8+ latin characters or numbers')
                 .required('Required')
         }),
         onSubmit: ({ username, password }) => {
@@ -169,21 +203,22 @@ const Auth = (props) => {
                             </Typography>
                             <form className={classes.form} onSubmit={handleSubmit}>
 
-                                {!touched.username && !errors.username ?
+                                {touched.username && errors.username ?
                                     <Grid container direction='column'>
-                                        <label>Логин:</label>
+                                        <label className={classes.inputErrorLabel}>Логин:</label>
                                         <input
-                                            className={classes.input}
+                                            className={classes.inputError}
                                             value={values.username}
                                             onChange={handleChange}
                                             type='email'
                                             name='username'
                                             id='username'
                                         />
+                                        <span className={classes.inputErrorMessage}>{errors.username}</span>
                                     </Grid>
                                     :
                                     <Grid container direction='column'>
-                                        <label>Логин:</label>
+                                        <label className={classes.inputLabel}>Логин:</label>
                                         <input
                                             className={classes.input}
                                             value={values.username}
@@ -196,19 +231,20 @@ const Auth = (props) => {
                                 }
                                 {touched.password && errors.password ?
                                     <Grid container direction='column'>
-                                        <label>Пароль:</label>
+                                        <label className={classes.inputErrorLabel}>Пароль:</label>
                                         <input
-                                            className={classes.input}
+                                            className={classes.inputError}
                                             value={values.password}
                                             onChange={handleChange}
                                             type='password'
                                             name='password'
                                             id='password'
                                         />
+                                        <span className={classes.inputErrorMessage}>{errors.password}</span>
                                     </Grid>
                                     :
                                     <Grid container direction='column'>
-                                        <label>Пароль:</label>
+                                        <label className={classes.inputLabel}>Пароль:</label>
                                         <input
                                             className={classes.input}
                                             value={values.password}

@@ -4,6 +4,7 @@ import React, { useEffect } from 'react';
 import Slider from './components/Slider/Slider';
 import NavBar from './components/NavBar/NavBar';
 import Flights from './components/Flights/Flights';
+import { Skeleton } from '@material-ui/lab';
 
 const useStyles = makeStyles(theme => ({
     root: {
@@ -19,6 +20,23 @@ const useStyles = makeStyles(theme => ({
         [theme.breakpoints.down('sm')]: {
             padding: 20,
         },
+    },
+    flights: {
+        overflowY: 'auto',
+        height: '40vh',
+        '&::-webkit-scrollbar': {
+            width: 2,
+            borderRadius: 2
+        },
+        '&::-webkit-scrollbar-track': {
+            background: '#E7E7E7'
+        },
+        '&::-webkit-scrollbar-thumb': {
+            background: '#1157A7'
+        },
+        [theme.breakpoints.down('sm')]: {
+            height: '50vh'
+        }
     }
 }))
 
@@ -26,16 +44,24 @@ const Content = (props) => {
     console.log(props, 'Content - props');
     const classes = useStyles()
     useEffect(() => {
-        props.fetchBrowseQuotes(props.state.outboundPartialDate)
+        if (props.state.flightsPage.outboundPartialDate) {
+            props.setPendingFlights()
+            props.fetchBrowseQuotes(props.state.flightsPage.outboundPartialDate)
+        }
         // eslint-disable-next-line react-hooks/exhaustive-deps
-    }, [props.state.outboundPartialDate])
+    }, [props.state.flightsPage.outboundPartialDate])
     return (
         <>
             <Grid item xs={11} md={8} lg={8} className={classes.root}>
                 <Paper className={classes.paper}>
-                    <NavBar setOutboundPartialDate={props.setOutboundPartialDate} outboundPartialDate={props.state.outboundPartialDate} />
-                    <Slider />
-                    <Flights />
+                    <NavBar setOutboundPartialDate={props.setOutboundPartialDate} outboundPartialDate={props.state.flightsPage.outboundPartialDate} />
+                    <Slider setImages={props.setImages} images={props.state.sliderPage} />
+                    {
+                        props.state.flightsPage.status === "PENDING_FLIGHTS" ?
+                            <Skeleton animation="wave" className={classes.flights} />
+                            :
+                            <Flights flightsPage={props.state.flightsPage} setFavorit={props.setFavorit} />
+                    }
                 </Paper>
             </Grid>
         </>

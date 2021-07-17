@@ -1,7 +1,7 @@
 import React, { useEffect } from "react";
 import Cookies from "js-cookie";
 import AuthContainer from "./components/Auth/AuthContainer";
-import MainContainer from "./components/Main/MainContainer";
+import Main from "./components/Main/Main";
 
 const App = props => {
 
@@ -12,12 +12,12 @@ const App = props => {
         }
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [props.status])
-
+    console.log(props.status)
     return (
         <>
             {
                 props.status === "SIGNIN_SUCCESS" ?
-                    <MainContainer />
+                    <Main />
                     :
                     <AuthContainer />
             }

@@ -1,5 +1,5 @@
 import { Divider, Grid, Hidden, makeStyles, Typography } from '@material-ui/core';
-import React, { useState } from 'react';
+import React from 'react';
 import PlaneSVG from './img/Plane.svg';
 import ArrowSVG from './img/Arrow.svg';
 import DashSVG from './img/Dash.svg';
@@ -114,9 +114,10 @@ const useStyles = makeStyles(theme => ({
     }
 }))
 
-const Flight = () => {
+const Flight = (props) => {
+    console.log(props, 'Flight - props');
+
     const classes = useStyles()
-    const [favorite, setFavorite] = useState(false)
     return (
         <>
             <Grid item xs={12} className={classes.root}>
@@ -131,41 +132,86 @@ const Flight = () => {
                     <Grid item xs={7} md={10} className={classes.flightInfo}>
                         <Grid item xs={12} className={classes.countries}>
                             <Typography variant='subtitle1' component='span'>
-                                Moscow (SVO)
+                                {
+                                    props.places.map(place => {
+                                        if (place.PlaceId === props.flight.OutboundLeg.OriginId) {
+                                            return `${place.CityName} (${place.IataCode})`
+                                        } return null
+                                    })
+                                }
                             </Typography>
                             <img src={ArrowSVG} alt='arrowIcon' />
                             <Typography variant='subtitle1' component='span' >
-                                New York City (JFK)
+                                {
+                                    props.places.map(place => {
+                                        if (place.PlaceId === props.flight.OutboundLeg.DestinationId) {
+                                            return `${place.CityName} (${place.IataCode})`
+                                        } return null
+                                    })
+                                }
                             </Typography>
                         </Grid>
                         <Grid item xs={12} className={classes.dateFlight}>
-                            <Typography variant='subtitle2' component='span'>
-                                28 June, 2020
-                            </Typography>
+                            <Hidden xsDown>
+                                <Typography variant='subtitle2' component='span'>
+                                    {
+                                        `${new Date(props.flight.OutboundLeg.DepartureDate).getDate()} ` +
+                                        `${new Date(props.flight.OutboundLeg.DepartureDate)
+                                            .toLocaleDateString('en-EN', { month: 'long' })}, ` +
+                                        `${new Date(props.flight.OutboundLeg.DepartureDate).getFullYear()}`
+                                    }
+                                </Typography>
+                            </Hidden>
+                            <Hidden smUp>
+                                <Typography variant='subtitle2' component='span'>
+                                    {
+                                        `${new Date(props.flight.OutboundLeg.DepartureDate).getDate()} ` +
+                                        `${new Date(props.flight.OutboundLeg.DepartureDate)
+                                            .toLocaleDateString('en-EN', { month: 'short' })}, ` +
+                                        `${new Date(props.flight.OutboundLeg.DepartureDate).getFullYear()}`
+                                    }
+                                </Typography>
+                            </Hidden>
+
                             <img src={DashSVG} alt='dashIcon' />
                             <Typography variant='subtitle2' component='span'>
-                                14:50
+                                {
+                                    `${new Date(props.flight.OutboundLeg.DepartureDate)
+                                        .toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' })}`
+                                }
                             </Typography>
                         </Grid>
                         <Grid item xs={12} className={classes.company}>
                             <Typography variant='subtitle2' component='span'>
-                                Aeroflot
+                                {
+                                    props.carriers.map(carrier => {
+                                        for (let i = 0; i < props.flight.OutboundLeg.CarrierIds.length; i++) {
+                                            if (carrier.CarrierId === props.flight.OutboundLeg.CarrierIds[i]) {
+                                                return `${carrier.Name}`
+                                            }
+                                        } return null
+                                    })
+                                }
                             </Typography>
                         </Grid>
                     </Grid>
                     <Grid item xs={5} md={2} className={classes.flightInfoSecond}>
                         {
-                            favorite ?
-                                <img onClick={() => setFavorite(false)} src={FavoriteTrue} alt='favoriteTrue' />
+                            props.flight.isFavorit === false || props.flight.isFavorit === undefined ?
+                                <img onClick={() => props.setFavorit(props.flight.QuoteId, true)} src={FavoriteFalse} alt='favoriteFalse' />
                                 :
-                                <img onClick={() => setFavorite(true)} src={FavoriteFalse} alt='favoriteFalse' />
+                                <img onClick={() => props.setFavorit(props.flight.QuoteId, false)} src={FavoriteTrue} alt='favoriteTrue' />
                         }
                         <Grid item xs={12} className={classes.flightPrice}>
                             <Typography variant='caption'>
                                 Price:
                             </Typography>
                             <Typography variant='body1'>
-                                23 924 ₽
+                                {
+                                    `${props.flight.MinPrice.toString().replace(/\B(?<!\.\d*)(?=(\d{3})+(?!\d))/g, " ")} ` +
+                                    `${props.currencies[0].Symbol}`
+
+                                }
                             </Typography>
                         </Grid>
                     </Grid>

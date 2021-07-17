@@ -1,5 +1,5 @@
 import 'date-fns';
-import { Box, Grid, makeStyles } from '@material-ui/core';
+import { Box, Grid, Hidden, makeStyles } from '@material-ui/core';
 import React, { useEffect } from 'react';
 import ArrowIcon from './Arrow.svg'
 import DateFnsUtils from '@date-io/date-fns';
@@ -70,7 +70,7 @@ const NavBar = (props) => {
 
     useEffect(() => {
         // let date = `${selectedDate.getFullYear()}-${selectedDate.getMonth() + 1}-${selectedDate.getDate()}`
-        let date = selectedDate.toISOString().slice(0,10)
+        let date = selectedDate.toISOString().slice(0, 10)
         props.setOutboundPartialDate(date)
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [selectedDate])
@@ -92,26 +92,51 @@ const NavBar = (props) => {
                 </Grid>
                 <Grid item xs={6} className={classes.date}>
                     <MuiPickersUtilsProvider utils={DateFnsUtils} locale={ruLocale} >
-                        <KeyboardDatePicker
-                            margin="normal"
-                            format="dd MMMM yyyy"
-                            disablePast="true"
-                            value={selectedDate}
-                            onChange={handleDateChange}
-                            KeyboardButtonProps={{
-                                'aria-label': 'change date',
-                            }}
-                            InputProps={{
-                                disableUnderline: true,
-                                disabled: true,
-                            }}
-                            keyboardIcon={<DateIcon />}
-                            classes={{ root: classes.inputDate }}
-                            InputAdornmentProps={{
-                                position: 'end'
-                            }}
+                        <Hidden xsDown>
+                            <KeyboardDatePicker
+                                margin="normal"
+                                format="dd MMMM yyyy"
+                                disablePast="true"
+                                value={selectedDate}
+                                onChange={handleDateChange}
+                                KeyboardButtonProps={{
+                                    'aria-label': 'change date',
+                                }}
+                                InputProps={{
+                                    disableUnderline: true,
+                                    disabled: true,
+                                }}
+                                keyboardIcon={<DateIcon />}
+                                classes={{ root: classes.inputDate }}
+                                InputAdornmentProps={{
+                                    position: 'end'
+                                }}
 
-                        />
+                            />
+                        </Hidden>
+                        <Hidden smUp>
+                            <KeyboardDatePicker
+                                margin="normal"
+                                format="dd MMM yyyy"
+                                disablePast="true"
+                                value={selectedDate}
+                                onChange={handleDateChange}
+                                KeyboardButtonProps={{
+                                    'aria-label': 'change date',
+                                }}
+                                InputProps={{
+                                    disableUnderline: true,
+                                    disabled: true,
+                                }}
+                                keyboardIcon={<DateIcon />}
+                                classes={{ root: classes.inputDate }}
+                                InputAdornmentProps={{
+                                    position: 'end'
+                                }}
+
+                            />
+                        </Hidden>
+
                     </MuiPickersUtilsProvider>
                 </Grid>
             </Box>

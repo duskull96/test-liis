@@ -1,14 +1,14 @@
 import { Box, Container, Grid } from '@material-ui/core';
 import React from 'react';
 import ContentContainer from './components/Content/ContentContainer';
-import Header from './components/Header/Header';
+import HeaderContainer from './components/Header/HeaderContainer';
 
 
-const Main = (props) => {
+const Main = () => {
     return (
         <>
             <Box>
-                <Header logOut={props.logOut} />
+                <HeaderContainer />
             </Box>
             <Container>
                 <Grid container direction='row' justifyContent='center'>
