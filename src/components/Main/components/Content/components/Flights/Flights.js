@@ -54,7 +54,6 @@ const useStyles = makeStyles(theme => ({
 
 }))
 const Flights = (props) => {
-    console.log(props, 'Flights - props');
     const classes = useStyles()
     return (
         <>

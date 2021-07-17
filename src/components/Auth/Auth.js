@@ -127,7 +127,7 @@ const useStyles = makeStyles((theme) => ({
 
 
 const Auth = (props) => {
-    console.log(props, 'Auth - props');
+
     const classes = useStyles();
     const [alert, setAlert] = useState(false)
 
@@ -158,7 +158,6 @@ const Auth = (props) => {
                 .required('Required')
         }),
         onSubmit: ({ username, password }) => {
-            console.log(values);
             props.SignIn(values)
             props.setPending()
         }
@@ -178,7 +177,6 @@ const Auth = (props) => {
                                     action={
                                         <IconButton
                                             aria-label="close"
-                                            // color="inherit"
                                             size="medium"
                                             onClick={() => {
                                                 props.setReady();

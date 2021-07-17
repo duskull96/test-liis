@@ -54,7 +54,6 @@ const useStyles = makeStyles(theme => ({
                 fontSize: 15,
             },
             '& input:nth-child(1)': {
-                // display: 'none',
                 width: 230,
                 textAlign: 'right',
                 [theme.breakpoints.down('sm')]: {
@@ -69,7 +68,6 @@ const NavBar = (props) => {
     const [selectedDate, setSelectedDate] = React.useState(new Date());
 
     useEffect(() => {
-        // let date = `${selectedDate.getFullYear()}-${selectedDate.getMonth() + 1}-${selectedDate.getDate()}`
         let date = selectedDate.toISOString().slice(0, 10)
         props.setOutboundPartialDate(date)
         // eslint-disable-next-line react-hooks/exhaustive-deps

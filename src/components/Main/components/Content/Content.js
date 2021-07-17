@@ -41,7 +41,6 @@ const useStyles = makeStyles(theme => ({
 }))
 
 const Content = (props) => {
-    console.log(props, 'Content - props');
     const classes = useStyles()
     useEffect(() => {
         if (props.state.flightsPage.outboundPartialDate) {

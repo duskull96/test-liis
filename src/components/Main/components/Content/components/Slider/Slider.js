@@ -29,7 +29,7 @@ const useStyles = makeStyles({
 })
 
 const Slider = (props) => {
-    console.log(props, 'Slider - props');
+
     const classes = useStyles()
     useEffect(() => {
         if (props.images.images) {

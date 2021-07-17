@@ -115,7 +115,6 @@ const useStyles = makeStyles(theme => ({
 }))
 
 const Flight = (props) => {
-    console.log(props, 'Flight - props');
 
     const classes = useStyles()
     return (

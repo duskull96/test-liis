@@ -12,7 +12,6 @@ const App = props => {
         }
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [props.status])
-    console.log(props.status)
     return (
         <>
             {
